@@ -1,0 +1,92 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Incoming Webhooks",
+    "description": "Incoming webhooks for channels in Quill. Allows you to create a new thread in the specified channel. Generate the webhook in the Webhooks tab in your team settings.",
+    "contact": {
+      "email": "support@quill.chat"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.quill.chat/webhooks"
+    }
+  ],
+  "tags": [
+    {
+      "name": "incoming",
+      "description": "Incoming webhooks."
+    }
+  ],
+  "paths": {
+    "/incoming": {
+      "post": {
+        "parameters": [
+          {
+            "in": "query",
+            "name": "channel",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "channel ID"
+          },
+          {
+            "in": "query",
+            "name": "webhook",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "webhook ID"
+          },
+          {
+            "in": "query",
+            "name": "nonce",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "nonce ID"
+          }
+        ],
+        "tags": [
+          "incoming"
+        ],
+        "summary": "Post a new thread to the specified channel. Generate a URL in the Webhooks tab in your team settings.",
+        "operationId": "postMessage",
+        "requestBody": {
+          "description": "Message object that needs to get posted.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Message"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "405": {
+            "description": "Invalid input",
+            "content": {}
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Message": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
